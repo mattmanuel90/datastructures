@@ -7,7 +7,17 @@
  */
 
 $bst = new BinarySearchTree();
-$bst->Initiate();
+$array = [5,10,3,25,71,11,22,151,67,88,99,44,47,32];
+
+foreach($array as &$arr)
+{
+    echo "index ";
+    echo $arr;
+    echo "\n";
+    $bst->AddLeaf($arr);
+}
+
+$bst->PrintInOrder();
 
 class Node
 {
@@ -29,22 +39,6 @@ class BinarySearchTree {
     {
         $node = new Node($data);
         return $node;
-    }
-
-    public function Initiate()
-    {
-        $array = [5,10,3,25,71,11,22,151,67,88,99,44,47,32];
-
-        foreach($array as &$arr)
-        {
-            echo "index ";
-            echo $arr;
-            echo "\n";
-            $this->AddLeaf($arr);
-        }
-
-        $this->PrintInOrder();
-
     }
 
     public function AddLeaf($data) //Adds the initial root
