@@ -7,109 +7,124 @@
  */
 
 $bst = new BinarySearchTree();
-$array = [5,10,3,25,71,11,22,151,67,88,99,44,47,32];
+$array = [27, 14, 35, 10, 19, 31, 42 ];
 
-foreach($array as &$arr)
-{
-    echo "index ";
-    echo $arr;
-    echo "\n";
+//creates BST from array
+foreach($array as &$arr) {
+    echo "index ". $arr . "\n";
     $bst->AddLeaf($arr);
 }
 
+
+echo("Printing In Order"."\n");
 $bst->PrintInOrder();
+echo("Printing Pre Order"."\n");
+$bst->PrintPreOrder();
+echo("Printing Post Order"."\n");
+$bst->PrintPostOrder();
 
-class Node
-{
-    public $data = NULL;
-    public $left = NULL;
-    public $right = NULL;
+class Node {
+    public $data, $left, $right = NULL;
 
-    public function __construct($data = NULL)
-    {
+    public function __construct($data = NULL) {
         $this->data = $data;
     }
 }
 
 class BinarySearchTree {
 
-    private $_rootNode = NULL;
+    private $rootNode = NULL;
 
-    public function &CreateLeaf($data)
-    {
+    public function &CreateNode($data) {
         $node = new Node($data);
         return $node;
     }
 
-    public function AddLeaf($data) //Adds the initial root
-    {
-        $this->AddLeafPrivate($data, $this->_rootNode);
+    public function AddLeaf($data) {
+        $this->AddNodePrivate($data, $this->rootNode); //Adds the initial root 
     }
 
-    function AddLeafPrivate($data, &$node)
-    {
-        if($this->_rootNode === NULL)
-        {
-            $this->_rootNode = $this->CreateLeaf($data);
+    //currently allowing duplicates
+    function AddNodePrivate($data, &$node) {
+        
+        //creates the rootNode
+        if($this->rootNode === NULL) {
+            $this->rootNode = $this->CreateNode($data);
         }
-        else if($data < $node->data )
-        {
-            if($node->left !== NULL) //Keep traversing the LeftChild recursively.
-            {
-                $this->AddLeafPrivate($data, $node->left);
-            }
-            else
-            {
-                $node->left = $this->CreateLeaf($data);
+        else if ($data <= $node->data ) {
+            if ($node->left !== NULL) { //Keep traversing the LeftChild recursively.
+                $this->AddNodePrivate($data, $node->left);
+            } else {
+                $node->left = $this->CreateNode($data);
             }
         }
-        else if($data > $node->data )
-        {
-            if($node->right !== NULL)//Keep traversing the Rightchild recursively.
-            {
-                $this->AddLeafPrivate($data, $node->right);
+        else if( $data > $node->data ) {
+            if( $node->right !== NULL ) { //Keep traversing the Rightchild recursively.
+                $this->AddNodePrivate($data, $node->right);
+            } else {
+                $node->right = $this->CreateNode($data);
             }
-            else
-            {
-                $node->right = $this->CreateLeaf($data);
-            }
-        }
-        else
-        {
-            echo "Value already exists! \n";
+        } else {
+            // echo "Value already exists! \n";
         }
     }
 
-    function PrintInOrderPrivate(Node &$node)
-    {
-        if($this->_rootNode != NULL )
-        {
-            if($node->left != NULL)
-            {
-               $this->PrintInOrderPrivate($node->left);
-            }
+    function PrintInOrderPrivate (Node &$node) {
+        if($node == NULL ) 
+            return;
 
-            echo $node->data;
-            echo "\n";
-
-            if($node->right != NULL)
-            {
-                $this->PrintInOrderPrivate($node->right);
-            }
+        if ($node->left != NULL) {
+            $this->PrintInOrderPrivate($node->left);
         }
 
+        echo $node->data . "\n";
+
+        if ($node->right != NULL) {
+            $this->PrintInOrderPrivate($node->right);
+        }
+    
     }
 
-    public function PrintInOrder()
-    {
-        $this->PrintInOrderPrivate($this->_rootNode);
+    function PrintPreOrderPrivate(Node &$node) {
+        if ($node == null)
+            return;
+        
+        echo $node->data . "\n";
+
+        if ($node->left != NULL) {
+            $this->PrintPreOrderPrivate($node->left);
+        }
+
+        if ($node->right != NULL) {
+            $this->PrintPreOrderPrivate($node->right);
+        }
     }
 
-    //TODO PrintPreOrder
-    //TODO PrintPostOrder
+    function PrintPostOrderPrivate(Node &$node) {
+        if ($node == null) {
+            return;
+        }
 
+        if ($node->left != NULL) {
+            $this->PrintPostOrderPrivate($node->left);
+        }
 
+        if ($node->right != NULL) {
+            $this->PrintPostOrderPrivate($node->right);
+        }
 
+        echo $node->data ."\n";
+    } 
+
+    public function PrintInOrder() {
+        $this->PrintInOrderPrivate($this->rootNode);
+    }
+    public function PrintPreOrder() {
+        $this->PrintPreOrderPrivate($this->rootNode);
+    }
+    public function PrintPostOrder() {
+        $this->PrintPostOrderPrivate($this->rootNode);
+    }
 
 }
 
