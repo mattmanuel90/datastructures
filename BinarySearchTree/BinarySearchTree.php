@@ -6,7 +6,7 @@
  * Time: 10:56 PM
  */
 
-$huh = new FakeNode(1, new FakeNode(4,3), new FakeNode(1,5));
+// $huh = new FakeNode(1, new FakeNode(4,3), new FakeNode(1,5));
 
 // $existingTree = array(
 //     'value'=> 1,
@@ -32,7 +32,7 @@ $huh = new FakeNode(1, new FakeNode(4,3), new FakeNode(1,5));
 //         )
 //     );
 
-print_r($existingTree);
+// print_r($existingTree);
 
 
 $bst = new BinarySearchTree();
